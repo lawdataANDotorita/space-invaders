@@ -8,9 +8,16 @@
 </head>
 <body>
     <div class="container">
-        <h1>this is working</h1>
-        <p>Space Invaders Game - Coming Soon!</p>
+        <h1>SPACE INVADERS</h1>
+        <div class="game-info">
+            <div class="score">SCORE: <span id="score">0</span></div>
+            <div class="lives">LIVES: <span id="lives">3</span></div>
+        </div>
         <canvas id="gameCanvas"></canvas>
+        <div class="controls">
+            <p>← → ARROW KEYS TO MOVE | SPACEBAR TO SHOOT</p>
+            <p id="gameStatus">PRESS SPACE TO START</p>
+        </div>
     </div>
     <script src="script.js"></script>
 </body>
