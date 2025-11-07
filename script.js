@@ -1,5 +1,5 @@
 // Space Invaders Game
-console.log("hi hi hi - Space Invaders Loading...");
+console.log("this is working - Space Invaders Loading...");
 
 // Get the canvas element
 const canvas = document.getElementById('gameCanvas');
@@ -20,7 +20,7 @@ function init() {
     ctx.fillStyle = '#0f0';
     ctx.font = '30px Arial';
     ctx.textAlign = 'center';
-    ctx.fillText('hi hi hi!', canvas.width / 2, canvas.height / 2);
+    ctx.fillText('this is working!', canvas.width / 2, canvas.height / 2);
     ctx.font = '20px Arial';
     ctx.fillText('Press any key to start', canvas.width / 2, canvas.height / 2 + 40);
 }
