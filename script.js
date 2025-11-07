@@ -6,6 +6,47 @@ const ctx = canvas.getContext('2d');
 canvas.width = 800;
 canvas.height = 600;
 
+// Audio Context for retro sound effects
+const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+
+// Sound effect functions
+function playInvaderHitSound() {
+    const oscillator = audioContext.createOscillator();
+    const gainNode = audioContext.createGain();
+
+    oscillator.connect(gainNode);
+    gainNode.connect(audioContext.destination);
+
+    // High-pitched retro beep for hitting invader
+    oscillator.frequency.setValueAtTime(800, audioContext.currentTime);
+    oscillator.frequency.exponentialRampToValueAtTime(400, audioContext.currentTime + 0.1);
+
+    gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
+    gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.1);
+
+    oscillator.start(audioContext.currentTime);
+    oscillator.stop(audioContext.currentTime + 0.1);
+}
+
+function playPlayerHitSound() {
+    const oscillator = audioContext.createOscillator();
+    const gainNode = audioContext.createGain();
+
+    oscillator.connect(gainNode);
+    gainNode.connect(audioContext.destination);
+
+    // Explosion-like sound - lower frequency with rapid decay
+    oscillator.frequency.setValueAtTime(200, audioContext.currentTime);
+    oscillator.frequency.exponentialRampToValueAtTime(50, audioContext.currentTime + 0.3);
+
+    gainNode.gain.setValueAtTime(0.5, audioContext.currentTime);
+    gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.3);
+
+    oscillator.type = 'sawtooth';
+    oscillator.start(audioContext.currentTime);
+    oscillator.stop(audioContext.currentTime + 0.3);
+}
+
 // Game state
 let gameRunning = false;
 let gameOver = false;
@@ -235,6 +276,9 @@ function checkCollisions() {
                 invader.alive = false;
                 bullets.splice(bulletIndex, 1);
 
+                // Play hit sound
+                playInvaderHitSound();
+
                 // Update score based on invader type
                 score += invader.type * 10;
                 document.getElementById('score').textContent = score;
@@ -256,6 +300,10 @@ function checkCollisions() {
             bullet.y + bullet.height > player.y) {
 
             enemyBullets.splice(bulletIndex, 1);
+
+            // Play player hit sound
+            playPlayerHitSound();
+
             lives--;
             document.getElementById('lives').textContent = lives;
 
